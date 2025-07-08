@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide - เพื่อนคู่ใจ...ทุกการรักษา</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles if needed beyond Tailwind */
+        .hero-bg {
+            background-image: url('https://via.placeholder.com/1200x800/e0f2fe/60a5fa?text=MediRide+Background'); /* Replace with a suitable background image */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Apply Prompt font to the entire body for Thai text, with sans-serif as fallback */
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* Apply Comfortaa font specifically to the MediRide text */
+        .font-comfortaa {
+            font-family: 'Comfortaa', cursive;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+    <div class="relative w-full max-w-lg mx-auto bg-white p-8 sm:p-10 rounded-3xl shadow-2xl overflow-hidden text-center transform transition-all duration-300 ease-in-out hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-100 via-white to-blue-50 opacity-75"></div>
+        
+        <div class="relative z-10">
+            <div class="mb-8 flex justify-center">
+                <img src="https://marketplace.canva.com/MH3bY/MAE0XMMH3bY/1/tl/canva-black-car-icon-MAE0XMMH3bY.png" alt="MediRide Logo" class="w-28 h-28 mx-auto object-contain animate-bounce-slow" />
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-blue-800 mb-4 leading-tight">
+                ยินดีต้อนรับสู่ <br class="sm:hidden">
+                <span class="text-blue-600 font-comfortaa">MediRide</span> 
+            </h1>
+
+            <p class="text-lg sm:text-xl text-gray-700 mb-10 leading-relaxed max-w-md mx-auto">
+                บริการเพื่อนคู่ใจ...ทุกการรักษา <br>
+                ระบบเรียกรถพาผู้สูงอายุไปโรงพยาบาล <br>พร้อมดูแลครบวงจร
+            </p>
+
+            <div class="mt-8">
+                <button 
+                    onclick="window.location.href = '1_UserSignup/Elderly/Step1_ChooseRole.html';" 
+                    class="bg-blue-600 text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95"
+                >
+                    เริ่มต้นใช้งาน
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logo = document.querySelector('.animate-bounce-slow');
+            if (logo) {
+                // Add a subtle bounce effect on load
+                logo.style.animation = 'bounce 2s infinite ease-in-out';
+            }
+        });
+    </script>
+</body>
+</html>
