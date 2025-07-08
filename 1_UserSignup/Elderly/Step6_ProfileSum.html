@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide Prototype - สรุปโปรไฟล์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        /* Apply Prompt font to the entire body for Thai text, with sans-serif as fallback */
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="window.history.back();" class="bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ย้อนกลับ
+            </button>
+            <span class="text-lg font-semibold text-gray-800">หน้า 5 จาก 5</span>
+            <button id="goToHomepageBtn" class="bg-blue-600 text-white hover:bg-blue-700 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ไปหน้าหลัก
+            </button> 
+        </div>
+
+        <div id="step5" class="step">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">โปรไฟล์ของคุณ</h2>
+            
+            <div class="bg-white rounded-xl p-8 shadow-xl border border-gray-200 flex flex-col items-center">
+                <img id="profilePic" src="https://via.placeholder.com/150/DDDDDD/BBBBBB?text=รูปโปรไฟล์" 
+                     class="w-36 h-36 rounded-full object-cover border-4 border-blue-400 shadow-lg mb-6" 
+                     alt="Profile Picture" />
+                
+                <h3 id="name" class="text-3xl font-bold text-gray-800 mb-2"></h3>
+                <p id="age" class="text-lg text-gray-600 mb-4"></p>
+                
+                <p id="finalUsername" class="text-md text-gray-500 font-medium mb-6 px-4 py-2 bg-gray-50 rounded-full border border-gray-200"></p>
+                
+                <div class="flex flex-wrap justify-center gap-3 mt-4">
+                    <span id="finalCondition" class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 shadow-sm">
+                        <svg class="w-4 h-4 mr-2 text-yellow-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        โรคประจำตัว: <span class="ml-1"></span> </span>
+                    
+                    <span id="finalSpecial" class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-pink-100 text-pink-800 shadow-sm">
+                        <svg class="w-4 h-4 mr-2 text-pink-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.683-1.543 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.788.565-1.843-.197-1.543-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.381-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"></path></svg>
+                        การดูแลพิเศษ: <span class="ml-1"></span> </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Retrieve data from sessionStorage
+            const profilePic = sessionStorage.getItem('profilePic');
+            const name = sessionStorage.getItem('name');
+            const age = sessionStorage.getItem('age');
+            const nickname = sessionStorage.getItem('nickname');
+            const phone = sessionStorage.getItem('phone');
+            const condition = sessionStorage.getItem('condition'); // This should be a comma-separated string
+            const specialCare = sessionStorage.getItem('specialCare');
+
+            // Get elements to display data
+            const profilePicEl = document.getElementById("profilePic");
+            const nameEl = document.getElementById("name");
+            const ageEl = document.getElementById("age");
+            const finalUsernameEl = document.getElementById("finalUsername");
+            const finalConditionEl = document.getElementById("finalCondition");
+            const finalSpecialEl = document.getElementById("finalSpecial");
+            const goToHomepageBtn = document.getElementById('goToHomepageBtn');
+
+            // Display Profile Picture
+            if (profilePic) {
+                profilePicEl.src = profilePic;
+            } else {
+                profilePicEl.src = "https://via.placeholder.com/150/DDDDDD/BBBBBB?text=ไม่มีรูป"; // Fallback image
+            }
+
+            // Display Name and Age
+            nameEl.textContent = name || 'ไม่ระบุชื่อ';
+            ageEl.textContent = age ? `อายุ: ${age} ปี` : 'ไม่ระบุอายุ';
+
+            // Display Username (nickname + phone)
+            const username = (nickname && phone) ? `@${nickname.toLowerCase().replace(/\s/g, '')}${phone}` : '@ไม่พบผู้ใช้';
+            finalUsernameEl.textContent = username;
+
+            // Display Conditions
+            const conditionContent = finalConditionEl.querySelector('span');
+            if (condition && condition !== "ไม่ระบุ") {
+                conditionContent.textContent = condition;
+                finalConditionEl.style.display = 'inline-flex'; // Show if content exists
+            } else {
+                conditionContent.textContent = 'ไม่มีโรคประจำตัว';
+                finalConditionEl.style.display = 'inline-flex'; // Always show, just change text
+                finalConditionEl.classList.remove('bg-yellow-100', 'text-yellow-800');
+                finalConditionEl.classList.add('bg-gray-100', 'text-gray-600');
+                finalConditionEl.querySelector('svg').style.display = 'none'; // Hide icon if no condition
+            }
+
+            // Display Special Care
+            const specialCareContent = finalSpecialEl.querySelector('span');
+            if (specialCare && specialCare !== "ไม่ระบุ") {
+                specialCareContent.textContent = specialCare;
+                finalSpecialEl.style.display = 'inline-flex'; // Show if content exists
+            } else {
+                specialCareContent.textContent = 'ไม่มีการดูแลพิเศษ';
+                finalSpecialEl.style.display = 'inline-flex'; // Always show, just change text
+                finalSpecialEl.classList.remove('bg-pink-100', 'text-pink-800');
+                finalSpecialEl.classList.add('bg-gray-100', 'text-gray-600');
+                finalSpecialEl.querySelector('svg').style.display = 'none'; // Hide icon if no special care
+            }
+
+            // Event listener for "Go to Homepage" button
+            goToHomepageBtn.addEventListener('click', () => {
+                window.location.href = '../../2_HomePage/Elderly/HomepageElderly.html';
+                });
+            });
+    </script>
+</body>
+</html>

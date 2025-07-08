@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediRide Prototype - สรุปโปรไฟล์</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="max-w-7xl w-full mx-auto bg-white p-8 rounded-xl shadow-lg min-h-screen md:py-12">
+    
+    <div class="flex justify-start mb-8">
+      <button id="goBackBtn" class="bg-gray-400 text-white hover:bg-gray-500 px-6 py-3 rounded-lg text-xl font-medium transition duration-200 ease-in-out">
+        ย้อนกลับ
+      </button>
+    </div>
+
+    <div id="step5" class="step">
+      <h2 class="text-5xl font-extrabold text-blue-600 mb-10 text-center">โปรไฟล์ของคุณ</h2>
+
+      <div class="bg-white rounded-xl p-10 shadow-xl border border-gray-200 flex flex-col lg:flex-row items-center lg:items-start lg:justify-center">
+        
+        <!-- รูปโปรไฟล์ -->
+        <div class="w-full lg:w-1/3 flex justify-center mb-8 lg:mb-0">
+          <img id="profilePic"
+               src="https://img.freepik.com/premium-vector/cartoon-elderly-woman-icon-white-background_1120563-17666.jpg"
+               class="w-80 h-80 rounded-full object-cover border-4 border-blue-400 shadow-lg"
+               alt="Profile Picture" />
+        </div>
+
+        <!-- ข้อมูลผู้ใช้ -->
+        <div class="w-full lg:w-2/3 lg:pl-12">
+          <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 mb-8 text-center lg:text-left">
+            <div>
+              <p class="text-xl font-semibold text-gray-700">ชื่อ:</p>
+              <h3 id="name" class="text-3xl font-bold text-gray-800"></h3>
+            </div>
+            <div> 
+              <p class="text-xl font-semibold text-gray-700">อายุ:</p>
+              <p id="age" class="text-2xl text-gray-600"></p>
+            </div>
+            
+            <div class="col-span-full"> 
+              <p class="text-xl font-semibold text-gray-700">ที่อยู่:</p>
+              <p id="address" class="text-xl text-gray-600"></p>
+            </div>
+            <div class="col-span-full"> 
+              <p class="text-xl font-semibold text-gray-700">ชื่อผู้ใช้:</p>
+              <p id="finalUsername" class="text-lg text-gray-600 font-semibold px-4 py-2 bg-gray-50 rounded-full border border-gray-200 inline-block"></p>
+            </div>
+          </div>
+          
+          <!-- แท็กเพิ่มเติม -->
+          <div class="flex flex-wrap justify-center lg:justify-start gap-4 mt-4 w-full">
+            <span id="finalCondition" class="inline-flex items-center px-5 py-2 rounded-full text-lg font-medium bg-yellow-100 text-yellow-800 shadow-sm">
+              <svg class="w-5 h-5 mr-2 text-yellow-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span><strong>โรคประจำตัว:</strong> <span id="conditionText"></span></span>
+            </span>
+            
+            <span id="finalSpecial" class="inline-flex items-center px-5 py-2 rounded-full text-lg font-medium bg-pink-100 text-pink-800 shadow-sm">
+              <svg class="w-5 h-5 mr-2 text-pink-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.683-1.543 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.788.565-1.843-.197-1.543-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.381-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+              <span><strong>การดูแลพิเศษ:</strong> <span id="specialCareText"></span></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const profilePic = sessionStorage.getItem('profilePic');
+      const name = sessionStorage.getItem('name');
+      const age = sessionStorage.getItem('age');
+      const nickname = sessionStorage.getItem('nickname');
+      const phone = sessionStorage.getItem('phone');
+      const condition = sessionStorage.getItem('condition'); 
+      const specialCare = sessionStorage.getItem('specialCare');
+      const address = sessionStorage.getItem('address');
+
+      const profilePicEl = document.getElementById("profilePic");
+      const addressEl = document.getElementById("address");
+      const nameEl = document.getElementById("name");
+      const ageEl = document.getElementById("age");
+      const finalUsernameEl = document.getElementById("finalUsername");
+      const finalConditionEl = document.getElementById("finalCondition");
+      const finalSpecialEl = document.getElementById("finalSpecial");
+      const conditionText = document.getElementById("conditionText");
+      const specialCareText = document.getElementById("specialCareText");
+
+      const goBackBtn = document.getElementById('goBackBtn');
+
+      if (profilePic) {
+        profilePicEl.src = profilePic;
+      } else {
+        profilePicEl.src = "https://img.freepik.com/premium-vector/cartoon-elderly-woman-icon-white-background_1120563-17666.jpg";
+      }
+
+      nameEl.textContent = name || 'ไม่ระบุชื่อ';
+      ageEl.textContent = age ? `${age} ปี` : 'ไม่ระบุอายุ';
+
+      const username = (nickname && phone) ? `@${nickname.toLowerCase().replace(/\s/g, '')}${phone}` : '@ไม่พบผู้ใช้';
+      finalUsernameEl.textContent = username;
+      addressEl.textContent = address || 'ไม่ระบุที่อยู่';
+
+      if (condition && condition !== "ไม่ระบุ") {
+        conditionText.textContent = condition;
+        finalConditionEl.style.display = 'inline-flex';
+      } else {
+        conditionText.textContent = 'ไม่มีโรคประจำตัว';
+        finalConditionEl.style.display = 'inline-flex';
+        finalConditionEl.classList.remove('bg-yellow-100', 'text-yellow-800');
+        finalConditionEl.classList.add('bg-gray-100', 'text-gray-600');
+        finalConditionEl.querySelector('svg').style.display = 'none';
+      }
+
+      if (specialCare && specialCare !== "ไม่ระบุ") {
+        specialCareText.textContent = specialCare;
+        finalSpecialEl.style.display = 'inline-flex';
+      } else {
+        specialCareText.textContent = 'ไม่มีการดูแลพิเศษ';
+        finalSpecialEl.style.display = 'inline-flex';
+        finalSpecialEl.classList.remove('bg-pink-100', 'text-pink-800');
+        finalSpecialEl.classList.add('bg-gray-100', 'text-gray-600');
+        finalSpecialEl.querySelector('svg').style.display = 'none';
+      }
+
+      goBackBtn.addEventListener('click', () => {
+        window.history.back();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>รายการนัดหมาย</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>
+        /* Optional: Add custom styles if Tailwind alone isn't enough for specific consistent sizing */
+        .appointment-card {
+            /* Ensures consistent height if content varies significantly, adjust as needed */
+            /* min-height: 280px; */ 
+        }
+        .appointment-image {
+            /* Ensures specific image dimensions */
+            width: 192px; /* 48 * 4px (tailwind w-48) */
+            height: 192px; /* 48 * 4px (tailwind h-48) */
+        }
+        body {
+        font-family: 'Prompt', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+    <h1 class="text-3xl font-bold text-center mb-6">รายการนัดหมายทั้งหมด</h1>
+
+    <div id="appointmentList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl shadow-md p-6 mb-6 appointment-card">
+            <div class="flex flex-col md:flex-row items-start gap-6">
+                <img src="https://www.shutterstock.com/image-vector/patient-office-doctor-consultation-man-600nw-2462345779.jpg" alt="รูปบริการ" class="rounded-xl object-cover shadow appointment-image" />
+                <div class="flex-1 space-y-2">
+                    <p class="text-xl font-bold text-green-600">บริการ: ปรึกษา</p>
+                    <p class="text-lg text-gray-700"><i class="fa-solid fa-hospital text-blue-500 mr-2"></i>โรงพยาบาล ABC</p>
+                    <p class="text-lg text-gray-700"><i class="fa-solid fa-calendar-days text-red-500 mr-2"></i>9 สิงหาคม 2569 เวลา 10:00 น.</p>
+                    <p class="text-lg text-gray-700"><i class="fa-solid fa-location-dot text-purple-500 mr-2"></i>อาคาร C, ชั้น 9</p>
+                    <p class="text-lg text-gray-700"><i class="fa-solid fa-id-card text-yellow-500 mr-2"></i>จาก : ผู้ดูแล (คุณเจ็ท)</p>
+                    <a href="ApmtElderly_SampleA.html" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-semibold shadow hover:bg-blue-700 transition">ดูรายละเอียด</a>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    <div class="text-center mt-8">
+        <button onclick="window.location.href='../HomepageElderly.html'" class="bg-gray-300 text-gray-700 py-3 px-8 rounded-xl text-lg hover:bg-gray-400">
+            กลับหน้าหลัก
+        </button>
+    </div>
+
+    <script>
+        // Function to get service image URL based on service name
+        function getServiceImage(serviceName) {
+            switch (serviceName) {
+                case "ปรึกษา": return "https://www.shutterstock.com/image-vector/patient-office-doctor-consultation-man-600nw-2462345779.jpg";
+                case "รักษา": return "https://static.vecteezy.com/system/resources/previews/010/503/813/non_2x/doctor-visiting-senior-patient-in-ward-2d-isolated-illustration-medicine-and-treatment-flat-characters-on-cartoon-background-healing-colourful-editable-scene-for-mobile-website-presentation-vector.jpg";
+                case "ตรวจสุขภาพ": return "https://thumb.ac-illust.com/1c/1c5747db4bca6b712de831802fdc12b3_t.jpeg";
+                case "กายภาพบำบัด": return "https://quizizz.com/media/resource/gs/quizizz-media/quizzes/c88415cc-a597-44ad-9283-cb04695e5853";
+                default: return "https://www.shutterstock.com/image-vector/male-doctor-smiling-happy-face-600nw-2481032615.jpg";
+            }
+        }
+
+        // Function to create an appointment card HTML element
+        function createAppointmentCard(data, source, storageKey) {
+            const card = document.createElement('div');
+            // Apply consistent Tailwind classes for card styling
+            card.classList.add('bg-white', 'rounded-2xl', 'shadow-md', 'p-6', 'mb-6', 'appointment-card');
+
+            // Get the image source using the helper function
+            const imageSrc = getServiceImage(data.selectedService);
+            
+            const selectedService = data.selectedService || 'ไม่ระบุบริการ';
+            const date = data.date || '-';
+            const time = data.time || '-';
+            const hospital = data.selectedHospital || 'ไม่ระบุโรงพยาบาล';
+            const location = data.location || "อาคาร A ชั้น 10"; 
+            const membership = data.selectedMembership || 'ไม่มี';
+            const appointmentSource = "คุณ"; // Static value for "จาก :"
+
+            // Function to format date into Thai Buddhist calendar
+            function formatDateThai(dateString) {
+                if (!dateString || dateString === '-') return '-';
+                const d = new Date(dateString);
+                const yearBE = d.getFullYear() + 543; // Convert Gregorian year to Buddhist Era year
+                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                // Use 'th-TH' locale for Thai month names and format, then replace Gregorian year with BE year
+                return d.toLocaleDateString('th-TH', options).replace(d.getFullYear().toString(), yearBE.toString());
+            }
+
+            card.innerHTML = `
+                <div class="flex flex-col md:flex-row items-start gap-6">
+                    <img src="${imageSrc}" alt="รูปบริการ" class="rounded-xl object-cover shadow appointment-image" />
+                    <div class="flex-1 space-y-2">
+                        <p class="text-xl font-bold text-green-600">บริการ: ${selectedService}</p>
+                        <p class="text-lg text-gray-700"><i class="fa-solid fa-hospital text-blue-500 mr-2"></i>${hospital}</p>
+                        <p class="text-lg text-gray-700"><i class="fa-solid fa-calendar-days text-red-500 mr-2"></i>${formatDateThai(date)} เวลา ${time} น.</p>
+                        <p class="text-lg text-gray-700"><i class="fa-solid fa-location-dot text-purple-500 mr-2"></i>${location}</p>
+                        <p class="text-lg text-gray-700"><i class="fa-solid fa-id-card text-yellow-500 mr-2"></i>จาก : ${appointmentSource}</p>
+                        ${membership === 'พรีเมียม' ? '<p class="text-sm text-green-500"><i class="fa-solid fa-star mr-1"></i> สมาชิกพรีเมียม</p>' : ''}
+                        <a href="ApmtDetailView.html" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-semibold shadow hover:bg-blue-700 transition view-detail-btn">ดูรายละเอียด</a>
+                    </div>
+                </div>
+            `;
+            
+            // Attach click event listener to the "ดูรายละเอียด" button
+            const viewDetailButton = card.querySelector('.view-detail-btn');
+            if (viewDetailButton) {
+                viewDetailButton.onclick = (e) => {
+                    e.stopPropagation(); // Prevent potential parent click events
+                    sessionStorage.setItem('ViewingAppointmentKey', storageKey); // Save key for detail view
+                    window.location.href = 'ApmtDetailView.html'; // Navigate to detail page
+                };
+            }
+
+            return card;
+        }
+
+        // Function to load all appointments from sessionStorage
+        function loadAppointments() {
+            const appointmentListDiv = document.getElementById('appointmentList');
+            // Clear existing dynamic content, but keep the static Sample A card
+            // We'll append dynamic cards *after* the static one, or you can control placement
+            // For simplicity, here we clear everything and re-add static if you wanted to manage it fully via JS.
+            // But since it's static in HTML, we'll just append after it.
+            // If you want to remove the static card, change the HTML above and uncomment the sampleAData below.
+            
+            // Iterate through all items in sessionStorage
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                // Only process keys related to created appointments
+                if (key.startsWith('ApmtElderly_Created_')) {
+                    const appointmentData = sessionStorage.getItem(key);
+                    if (appointmentData) {
+                        try {
+                            let data = JSON.parse(appointmentData); // Use 'let' to allow modification
+
+                            // Ensure serviceImage is present in data. This handles older data
+                            // or cases where it wasn't saved initially.
+                            if (!data.serviceImage) {
+                                data.serviceImage = getServiceImage(data.selectedService);
+                                // Optional: Save the updated data back to sessionStorage for persistence
+                                // sessionStorage.setItem(key, JSON.stringify(data)); 
+                            }
+
+                            // Create and append the card for the loaded appointment
+                            const card = createAppointmentCard(data, 'ผู้ใช้งาน', key);
+                            appointmentListDiv.appendChild(card);
+                        } catch (e) {
+                            console.error('Error parsing appointment data for key:', key, e);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Load appointments when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', loadAppointments);
+    </script>
+</body>
+</html>

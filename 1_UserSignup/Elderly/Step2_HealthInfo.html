@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide Prototype - ข้อมูลสุขภาพ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+            font-family: 'Prompt', sans-serif;
+        }
+        /* Custom styles for checkbox appearance and responsive adjustments */
+        /* เมื่อ checkbox ถูกเลือก */
+        .peer:checked + .condition-item {
+            border-color: #2563eb; /* blue-600 */
+        }
+        /* เมื่อ checkbox ถูกโฟกัส */
+        .peer:focus + .condition-item {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25); /* blue-200 */
+        }
+        /* เมื่อ checkbox ถูกเลือก - ข้อความเปลี่ยนสี */
+        .peer:checked + .condition-item span {
+            color: #2563eb; /* blue-600 */
+        }
+        /* Checkmark */
+        .peer:checked ~ .checkmark {
+            opacity: 1;
+            transform: scale(1);
+            border-color: #2563eb; /* blue-600 */
+            background-color: #2563eb; /* blue-600 */
+        }
+
+        /* Base styles for condition-item */
+        .condition-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 2px solid #D1D5DB; /* border-gray-300 */
+            background-color: #FFFFFF; /* bg-white */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-md */
+            transition: all 200ms ease-in-out;
+            cursor: pointer;
+            text-align: center; /* Ensure text is centered */
+            white-space: normal; /* Allow text to wrap */
+            line-height: 1.2; /* Adjust line height for better vertical alignment */
+        }
+
+        /* Base styles for checkmark */
+        .checkmark {
+            position: absolute;
+            border-radius: 9999px; /* rounded-full */
+            border: 2px solid #D1D5DB; /* border-gray-300 */
+            background-color: #FFFFFF; /* bg-white */
+            opacity: 0;
+            transform: scale(0);
+            transition: all 200ms ease-in-out;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 10; /* Make sure checkmark is on top */
+            background-image: url('https://img.icons8.com/ios-filled/50/ffffff/checkmark.png'); /* White checkmark */
+        }
+        
+        /* Responsive adjustments for checkbox items */
+        @media (max-width: 640px) {
+            .condition-item {
+                width: 48%; /* 2 items per row */
+                min-height: 120px;
+                padding: 1rem;
+            }
+            .condition-item img {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 0.5rem; /* mb-2 */
+            }
+            .condition-item span {
+                font-size: 0.875rem; /* text-sm */
+            }
+            .checkmark {
+                width: 20px;
+                height: 20px;
+                background-size: 12px 12px !important; /* Adjusted size for smaller screens */
+                right: 4px;
+                top: 4px;
+            }
+        }
+
+        @media (min-width: 641px) {
+            .condition-item {
+                width: 160px; /* Fixed width for larger screens */
+                min-height: 160px;
+                padding: 1.5rem;
+            }
+            .condition-item img {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 0.5rem; /* mb-2 */
+            }
+            .condition-item span {
+                font-size: 1rem; /* text-base */
+            }
+            .checkmark {
+                width: 24px;
+                height: 24px;
+                background-size: 16px 16px !important; /* Adjusted size for larger screens */
+                right: 8px;
+                top: 8px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-lg w-full mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="window.history.back();" class="bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ย้อนกลับ
+            </button>
+            <span class="text-lg font-semibold text-gray-800">หน้า 1 จาก 5</span>
+            <button id="nextBtn" class="bg-blue-600 text-white hover:bg-blue-700 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                ถัดไป
+            </button>
+        </div>
+
+        <div id="step2" class="step">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">ข้อมูลสุขภาพ</h2>
+            
+            <label class="block mb-6 text-xl font-semibold text-gray-700 text-center">โรคประจำตัว</label>
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <label for="diabetes" class="relative cursor-pointer flex-shrink-0">
+                    <input type="checkbox" id="diabetes" name="condition" value="โรคเบาหวาน" class="peer sr-only" />
+                    <span class="condition-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/11748/11748885.png" alt="diabetes icon" />
+                        <span class="text-gray-600 font-medium">โรคเบาหวาน</span>
+                    </span>
+                    <span class="checkmark"></span>
+                </label>
+
+                <label for="bone" class="relative cursor-pointer flex-shrink-0">
+                    <input type="checkbox" id="bone" name="condition" value="โรคกระดูก" class="peer sr-only" />
+                    <span class="condition-item">
+                        <img src="https://cdn-icons-png.freepik.com/256/8011/8011304.png" alt="bone icon" />
+                        <span class="text-gray-600 font-medium">โรคกระดูก</span>
+                    </span>
+                    <span class="checkmark"></span>
+                </label>
+
+                <label for="braindisease" class="relative cursor-pointer flex-shrink-0">
+                    <input type="checkbox" id="braindisease" name="condition" value="โรคประสาทและสมอง" class="peer sr-only" />
+                    <span class="condition-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/882/882998.png" alt="brain icon" />
+                        <span class="text-gray-600 font-medium">โรคประสาทและสมอง</span>
+                    </span>
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const nextBtn = document.getElementById('nextBtn');
+        const conditionCheckboxes = document.querySelectorAll('input[name="condition"]');
+
+        // Function to update the "Next" button's enabled/disabled state
+        function updateNextButtonState() {
+            const anyChecked = Array.from(conditionCheckboxes).some(checkbox => checkbox.checked);
+            nextBtn.disabled = !anyChecked;
+        }
+
+        // Function to validate selection and navigate
+        function validateAndGoNext() {
+            const selectedOptions = Array.from(conditionCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            if (selectedOptions.length > 0) {
+                // แก้ไขตรงนี้: เปลี่ยน JSON.stringify() เป็น .join(', ')
+                sessionStorage.setItem('condition', selectedOptions.join(', ')); 
+                console.log("Selected conditions:", selectedOptions); // For testing
+                window.location.href = 'Step3_SpecialCare.html'; // Navigate to the next step
+            } else {
+                alert('กรุณาเลือกโรคประจำตัวที่ต้องดูแลอย่างน้อย 1 ข้อ');
+            }
+        }
+
+        // Add event listeners to all checkboxes
+        conditionCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateNextButtonState);
+        });
+
+        // Initial check when the page loads
+        updateNextButtonState();
+
+        nextBtn.addEventListener('click', () => {
+            if (!nextBtn.disabled) {
+                validateAndGoNext();
+            }
+        });
+    </script>
+</body>
+</html>

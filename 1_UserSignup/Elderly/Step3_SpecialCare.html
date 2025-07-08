@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide Prototype - เงื่อนไขพิเศษ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+            font-family: 'Prompt', sans-serif;
+        }
+        /* Custom styles for checkbox appearance and responsive adjustments */
+        .peer:checked + span {
+            border-color: #2563eb; /* blue-600 */
+            color: #2563eb; /* blue-600 */
+        }
+        .peer:focus + span {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25); /* blue-200 */
+        }
+        .peer:checked ~ .checkmark {
+            opacity: 1;
+            transform: scale(1);
+            border-color: #2563eb; /* blue-600 */
+            background-color: #2563eb; /* blue-600 */
+        }
+
+        /* Responsive adjustments for checkbox items */
+        @media (max-width: 640px) {
+            .care-item {
+                width: 48%; /* Adjust for 2 items per row on small screens */
+                min-height: 120px; /* Ensure sufficient height */
+                padding: 1rem; /* Adjust padding for small screens */
+            }
+            .care-item img {
+                width: 48px; /* Slightly smaller icons on small screens */
+                height: 48px;
+            }
+            .care-item span {
+                font-size: 0.875rem; /* text-sm */
+                white-space: normal; /* Allow text to wrap if needed */
+                text-align: center;
+                line-height: 1.2; /* Adjust line height for better vertical alignment */
+            }
+            .checkmark {
+                width: 20px;
+                height: 20px;
+                background-size: 10px 10px !important;
+                right: 4px;
+                top: 4px;
+            }
+        }
+
+        @media (min-width: 641px) {
+            .care-item {
+                width: 160px; /* Fixed width for better alignment on larger screens */
+                min-height: 160px;
+                padding: 1.5rem; /* Adjust padding for larger screens */
+            }
+            .care-item img {
+                width: 60px; /* Larger icons on desktop */
+                height: 60px;
+            }
+            .care-item span {
+                font-size: 1rem; /* text-base */
+                white-space: normal; /* Allow text to wrap if needed */
+                text-align: center;
+                line-height: 1.2; /* Adjust line height for better vertical alignment */
+            }
+            .checkmark {
+                width: 24px;
+                height: 24px;
+                background-size: 14px 14px !important;
+                right: 8px; /* Adjust checkmark position to top-right */
+                top: 8px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-lg w-full mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="window.history.back();" class="bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ย้อนกลับ
+            </button>
+            <span class="text-lg font-semibold text-gray-800">หน้า 2 จาก 5</span>
+            <button id="nextBtn" class="bg-blue-600 text-white hover:bg-blue-700 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                ถัดไป
+            </button>
+        </div>
+
+        <div id="step3" class="step">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">เงื่อนไขพิเศษที่ต้องดูแล</h2>
+            
+            <label class="block mb-6 text-xl font-semibold text-gray-700 text-center">โปรดเลือกเงื่อนไข</label>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <label for="wheelchair" class="relative cursor-pointer flex-shrink-0">
+                    <input type="checkbox" id="wheelchair" name="specialCare" value="ต้องนั่งรถเข็น" class="peer sr-only" />
+                    <span class="care-item flex flex-col items-center justify-center rounded-lg border-2 border-gray-300 bg-white shadow-md transition-all duration-200 ease-in-out hover:border-blue-600">
+                        <img src="https://cdn-icons-png.flaticon.com/512/657/657563.png" class="mb-2" alt="wheelchair icon" />
+                        <span class="text-gray-600 font-medium">ต้องการรถเข็น</span>
+                    </span>
+                    <span class="checkmark absolute rounded-full border-2 border-gray-300 bg-white opacity-0 scale-0 transition-all duration-200 ease-in-out bg-center bg-no-repeat"
+                        style="background-image: url('https://img.icons8.com/ios-filled/50/ffffff/checkmark.png');">
+                    </span>
+                </label>
+
+                <label for="nurse" class="relative cursor-pointer flex-shrink-0">
+                    <input type="checkbox" id="nurse" name="specialCare" value="ต้องมีพยาบาลดูแล" class="peer sr-only" />
+                    <span class="care-item flex flex-col items-center justify-center rounded-lg border-2 border-gray-300 bg-white shadow-md transition-all duration-200 ease-in-out hover:border-blue-600">
+                        <img src="https://cdn-icons-png.flaticon.com/512/822/822111.png" class="mb-2" alt="nurse icon" />
+                        <span class="text-gray-600 font-medium">ต้องการพยาบาลดูแล</span>
+                    </span>
+                    <span class="checkmark absolute rounded-full border-2 border-gray-300 bg-white opacity-0 scale-0 transition-all duration-200 ease-in-out bg-center bg-no-repeat"
+                        style="background-image: url('https://img.icons8.com/ios-filled/50/ffffff/checkmark.png');">
+                    </span>
+                </label>
+
+                <label for="oxygen" class="relative cursor-pointer flex-shrink-0">
+                    <input type="checkbox" id="oxygen" name="specialCare" value="ต้องการเครื่องช่วยหายใจ" class="peer sr-only" />
+                    <span class="care-item flex flex-col items-center justify-center rounded-lg border-2 border-gray-300 bg-white shadow-md transition-all duration-200 ease-in-out hover:border-blue-600">
+                        <img src="https://images.icon-icons.com/3803/PNG/512/inhaler_man_breathe_respire_icon_233085.png" class="mb-2" alt="oxygen icon" />
+                        <span class="text-gray-600 font-medium">ต้องการเครื่องช่วยหายใจ</span>
+                    </span>
+                    <span class="checkmark absolute rounded-full border-2 border-gray-300 bg-white opacity-0 scale-0 transition-all duration-200 ease-in-out bg-center bg-no-repeat"
+                        style="background-image: url('https://img.icons8.com/ios-filled/50/ffffff/checkmark.png');">
+                    </span>
+                </label>
+                
+                <label for="none" class="relative cursor-pointer flex-shrink-0">
+                    <input type="checkbox" id="none" name="specialCare" value="ไม่มี" class="peer sr-only" />
+                    <span class="care-item flex flex-col items-center justify-center rounded-lg border-2 border-gray-300 bg-white shadow-md transition-all duration-200 ease-in-out hover:border-blue-600">
+                        <img src="https://www.pngarts.com/files/3/Minus-Transparent-Image.png" class="mb-2" alt="no special care icon" />
+                        <span class="text-gray-600 font-medium">ไม่มี</span>
+                    </span>
+                    <span class="checkmark absolute rounded-full border-2 border-gray-300 bg-white opacity-0 scale-0 transition-all duration-200 ease-in-out bg-center bg-no-repeat"
+                        style="background-image: url('https://img.icons8.com/ios-filled/50/ffffff/checkmark.png');">
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const nextBtn = document.getElementById('nextBtn');
+        const specialCareCheckboxes = document.querySelectorAll('input[name="specialCare"]');
+        const noneCheckbox = document.getElementById('none');
+
+        // Function to update the "Next" button's enabled/disabled state
+        function updateNextButtonState() {
+            const anyChecked = Array.from(specialCareCheckboxes).some(checkbox => checkbox.checked);
+            nextBtn.disabled = !anyChecked;
+        }
+
+        // Function to handle "None" checkbox interaction
+        function handleNoneCheckbox(event) {
+            if (noneCheckbox.checked) {
+                // If "None" is checked, uncheck all other checkboxes
+                specialCareCheckboxes.forEach(checkbox => {
+                    if (checkbox !== noneCheckbox) {
+                        checkbox.checked = false;
+                    }
+                });
+            }
+            updateNextButtonState(); // Update button state after changes
+        }
+
+        // Function to handle other checkboxes interaction
+        function handleOtherCheckboxes(event) {
+            if (event.target !== noneCheckbox && event.target.checked) {
+                // If any other checkbox is checked, uncheck "None"
+                noneCheckbox.checked = false;
+            }
+            updateNextButtonState(); // Update button state after changes
+        }
+
+        // Function to validate selection and navigate
+        function validateAndGoNext() {
+            const selectedOptions = Array.from(specialCareCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            if (selectedOptions.length > 0) {
+                // Store selected special care options (e.g., in sessionStorage)
+                sessionStorage.setItem('specialCare', selectedOptions.join(', '));
+                console.log("Selected special care:", selectedOptions); // For testing
+                window.location.href = 'Step4_PersonalInfo.html'; // Navigate to the next step
+            } else {
+                alert('กรุณาเลือกเงื่อนไขพิเศษที่ต้องดูแลอย่างน้อย 1 ข้อ');
+            }
+        }
+
+        // Add event listeners
+        specialCareCheckboxes.forEach(checkbox => {
+            if (checkbox === noneCheckbox) {
+                checkbox.addEventListener('change', handleNoneCheckbox);
+            } else {
+                checkbox.addEventListener('change', handleOtherCheckboxes);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (!nextBtn.disabled) {
+                validateAndGoNext();
+            }
+        });
+
+        // Initial check on page load
+        updateNextButtonState();
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide Prototype - ข้อมูลส่วนตัว (ผู้ดูแล)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        /* Apply Prompt font to the entire body for Thai text, with sans-serif as fallback */
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* Custom styles for input focus and styling */
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #2563eb; /* blue-600 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* blue-500 with opacity */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="window.history.back();" class="bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ย้อนกลับ
+            </button>
+            <span class="text-lg font-semibold text-gray-800">หน้า 1 จาก 4</span>
+            <button id="nextBtn" class="bg-blue-600 text-white hover:bg-blue-700 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                ถัดไป
+            </button>
+        </div>
+
+        <div id="step3" class="step">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">ข้อมูลส่วนตัว</h2>
+            
+            <form id="personalInfoForm">
+                <div class="mb-5">
+                    <label for="name" class="block text-gray-700 text-sm font-medium mb-2">ชื่อจริง-นามสกุล</label>
+                    <input type="text" id="name" placeholder="กรุณากรอกชื่อจริงและนามสกุล" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out" />
+                </div>
+                
+                <div class="mb-5">
+                    <label for="nickname" class="block text-gray-700 text-sm font-medium mb-2">ชื่อเล่น (สำหรับ Username)</label>
+                    <input type="text" id="nickname" placeholder="กรุณากรอกชื่อเล่น (ภาษาอังกฤษเท่านั้น)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out" />
+                </div>
+                
+                <div class="mb-5">
+                    <label for="age" class="block text-gray-700 text-sm font-medium mb-2">อายุ</label>
+                    <input type="number" id="age" placeholder="กรุณากรอกอายุ" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out" min="0" />
+                </div>
+                
+                <div class="mb-5">
+                    <label for="phone" class="block text-gray-700 text-sm font-medium mb-2">เบอร์โทรศัพท์</label>
+                    <input type="tel" id="phone" placeholder="กรุณากรอกเบอร์โทรศัพท์ 10 หลัก" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out" pattern="[0-9]{10}" title="กรุณากรอกเบอร์โทรศัพท์ 10 หลัก" />
+                </div>
+                
+                <div class="mb-6">
+                    <label for="address" class="block text-gray-700 text-sm font-medium mb-2">ที่อยู่ปัจจุบัน</label>
+                    <textarea id="address" placeholder="กรุณากรอกที่อยู่ปัจจุบัน" rows="4" class="w-full p-3 border border-gray-300 rounded-lg resize-y focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const nextBtn = document.getElementById('nextBtn');
+        const nameInput = document.getElementById('name');
+        const nicknameInput = document.getElementById('nickname');
+        const ageInput = document.getElementById('age');
+        const phoneInput = document.getElementById('phone');
+        const addressInput = document.getElementById('address');
+
+        // Function to validate form fields and enable/disable the "Next" button
+        function validateForm() {
+            const isFormValid = nameInput.value.trim() !== '' &&
+                                nicknameInput.value.trim() !== '' &&
+                                ageInput.value.trim() !== '' &&
+                                phoneInput.value.trim() !== '' &&
+                                addressInput.value.trim() !== '';
+            nextBtn.disabled = !isFormValid;
+        }
+
+        // Add event listeners to all input fields to trigger validation on input
+        nameInput.addEventListener('input', validateForm);
+        nicknameInput.addEventListener('input', validateForm);
+        ageInput.addEventListener('input', validateForm);
+        phoneInput.addEventListener('input', validateForm);
+        addressInput.addEventListener('input', validateForm);
+
+        // Initial validation call in case there's pre-filled data or on page load
+        document.addEventListener('DOMContentLoaded', validateForm);
+
+        // Handle "Next" button click
+        nextBtn.addEventListener('click', () => {
+            if (!nextBtn.disabled) {
+                // Store data in sessionStorage
+                sessionStorage.setItem('name', nameInput.value.trim());
+                sessionStorage.setItem('nickname', nicknameInput.value.trim());
+                sessionStorage.setItem('age', ageInput.value.trim());
+                sessionStorage.setItem('phone', phoneInput.value.trim());
+                sessionStorage.setItem('address', addressInput.value.trim()); // Storing address as well
+
+                // Create username (nickname + phone) and store it
+                const username = nicknameInput.value.trim() + phoneInput.value.trim();
+                sessionStorage.setItem('username', username);
+
+                // Navigate to the next page
+                window.location.href = 'Step3_Profilepic.html';
+            }
+        });
+    </script>
+</body>
+</html>

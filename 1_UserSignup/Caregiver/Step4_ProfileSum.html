@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide Prototype - สรุปโปรไฟล์ (ผู้ดูแล)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        /* Apply Prompt font to the entire body for Thai text, with sans-serif as fallback */
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="window.history.back();" class="bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ย้อนกลับ
+            </button>
+            <span class="text-lg font-semibold text-gray-800">หน้า 3 จาก 4</span>
+            <button id="nextBtn" class="bg-blue-600 text-white hover:bg-blue-700 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ถัดไป
+            </button> 
+        </div>
+
+        <div id="step5" class="step">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">โปรไฟล์ของคุณ</h2>
+            
+            <div class="bg-white rounded-xl p-8 shadow-xl border border-gray-200 flex flex-col items-center">
+                <img id="profilePic" src="https://via.placeholder.com/150/DDDDDD/BBBBBB?text=รูปโปรไฟล์" 
+                     class="w-36 h-36 rounded-full object-cover border-4 border-blue-400 shadow-lg mb-6" 
+                     alt="Profile Picture" />
+                
+                <h3 id="name" class="text-3xl font-bold text-gray-800 mb-2"></h3>
+                
+                <p id="age" class="text-lg text-gray-600 mb-4"></p>
+                
+                <p id="finalUsername" class="text-md text-gray-500 font-medium mb-6 px-4 py-2 bg-gray-50 rounded-full border border-gray-200"></p>
+                
+                <div class="mt-4 text-left w-full">
+                    <p class="text-gray-700 font-medium mb-1">ที่อยู่:</p>
+                    <p id="address" class="text-gray-600 text-base break-words"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Retrieve data from sessionStorage
+            const profilePic = sessionStorage.getItem('profilePic');
+            const name = sessionStorage.getItem('name'); // Full name
+            const age = sessionStorage.getItem('age');
+            const nickname = sessionStorage.getItem('nickname');
+            const phone = sessionStorage.getItem('phone');
+            const address = sessionStorage.getItem('address');
+
+            // Get elements to display data
+            const profilePicEl = document.getElementById("profilePic");
+            const nameEl = document.getElementById("name");
+            const ageEl = document.getElementById("age");
+            const finalUsernameEl = document.getElementById("finalUsername");
+            const addressEl = document.getElementById("address");
+            const nextBtn = document.getElementById('nextBtn');
+
+            // Display Profile Picture
+            if (profilePic) {
+                profilePicEl.src = profilePic;
+            } else {
+                profilePicEl.src = "https://via.placeholder.com/150/DDDDDD/BBBBBB?text=ไม่มีรูป"; // Fallback image
+            }
+
+            // Display Full Name
+            nameEl.textContent = name || 'ไม่ระบุชื่อ';
+
+            // Display Age
+            ageEl.textContent = age ? `อายุ: ${age} ปี` : 'ไม่ระบุอายุ';
+
+            // Display Username (nickname + phone)
+            // Ensure username is generated correctly if nickname/phone are available
+            const username = (nickname && phone) ? `@${nickname.toLowerCase().replace(/\s/g, '')}${phone}` : '@ไม่พบผู้ใช้';
+            finalUsernameEl.textContent = username;
+
+            // Display Address
+            addressEl.textContent = address || 'ไม่ระบุที่อยู่';
+
+            // Event listener for "Next" button
+            nextBtn.addEventListener('click', () => {
+                // Navigate to the pairing page for caregivers
+                window.location.href = 'Step5_PairWithElderly.html'; 
+            });
+        });
+    </script>
+</body>
+</html>

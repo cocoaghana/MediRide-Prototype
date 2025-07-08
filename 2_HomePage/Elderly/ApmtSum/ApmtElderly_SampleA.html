@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>รายละเอียดการนัดหมาย</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+    </style>
+</head>
+<body onload="loadSummary()" class="bg-blue-50/50 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-4xl w-full bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <h1 class="text-3xl lg:text-4xl font-bold text-blue-800 text-center mb-8">รายละเอียดการนัดหมาย</h1>
+
+        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+            <div class="flex flex-col items-center gap-6 w-full lg:w-auto">
+                <img id="serviceImage" src="https://www.shutterstock.com/image-vector/patient-office-doctor-consultation-man-600nw-2462345779.jpg" alt="รูปบริการ" class="w-64 h-64 rounded-2xl shadow-lg object-cover" />
+                <div id="visualDate" class="w-64 h-64 rounded-2xl shadow-lg flex flex-col justify-center items-center text-white" style="background-color: #22c55e;">
+                    <div class="font-bold text-center drop-shadow-lg">
+                        <span class="text-8xl">9</span>
+                        <p class="text-4xl tracking-wider">อาทิตย์</p>
+                        <p class="text-sm mt-2 bg-white/20 px-3 py-1 rounded-full">จาก: ผู้ดูแล(คุณเซจ)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 bg-gray-50 p-6 rounded-2xl shadow-inner w-full">
+                <div id="summary" class="space-y-4">
+                    <div class="flex items-start gap-4 text-xl">
+                        <i class="fa-solid fa-hand-holding-medical text-2xl text-green-500 w-8 text-center pt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-500">บริการที่เลือก</span>
+                            <p class="font-bold text-2xl text-green-600">ปรึกษา</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 text-xl">
+                        <i class="fa-regular fa-hospital text-2xl text-blue-500 w-8 text-center pt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-500">โรงพยาบาล</span>
+                            <p class="font-bold text-gray-800">โรงพยาบาล ABC</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 text-xl">
+                        <i class="fa-regular fa-calendar-days text-2xl text-red-500 w-8 text-center pt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-500">วันและเวลา</span>
+                            <p class="font-bold text-gray-800">9 สิงหาคม 2569 (10:00 น.)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 text-xl">
+                        <i class="fa-solid fa-location-dot text-2xl text-purple-500 w-8 text-center pt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-500">สถานที่นัดพบ</span>
+                            <p class="font-bold text-gray-800">อาคาร C, ชั้น 9</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 text-xl">
+                        <i class="fa-regular fa-id-card text-2xl text-yellow-500 w-8 text-center pt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-500">ระบบสมาชิก</span>
+                            <p class="font-bold text-gray-800">ทั่วไป</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6 border-gray-200" />
+                <div id="driverInfo" class="space-y-4">
+                    <h3 class="text-2xl font-bold text-gray-700 mb-4">ข้อมูลผู้ขับรถ</h3>
+                    <div class="flex items-start gap-4 text-xl">
+                        <i class="fa-solid fa-user-tie text-2xl text-gray-600 w-8 text-center pt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-500">ชื่อ</span>
+                            <p class="font-bold text-gray-800">นายสมชาย ใจดี</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 text-xl">
+                        <i class="fa-solid fa-car text-2xl text-gray-600 w-8 text-center pt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-500">ทะเบียนรถ</span>
+                            <p class="font-bold text-gray-800">กข 1234 กรุงเทพมหานคร</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 text-xl">
+                        <i class="fa-regular fa-clock text-2xl text-gray-600 w-8 text-center pt-1"></i>
+                        <div>
+                            <span class="font-semibold text-gray-500">เวลานัดรับ</span>
+                            <p class="font-bold text-gray-800">08:00 น.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-10">
+            <button
+                onclick="window.location.href='ApmtList.html'"
+                class="bg-blue-600 text-white py-3 px-8 rounded-full text-lg font-semibold shadow-md hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+            >
+                กลับหน้ารายการนัดหมาย
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function loadSummary() {
+            // Static data - You can directly input your desired data here
+            const appointmentData = {
+                selectedService: "ปรึกษา",
+                selectedHospital: "โรงพยาบาล ABC",
+                date: "2026-08-09T10:00:00",
+                time: "10:00 น.",
+                selectedMembership: "ทั่วไป"
+            };
+
+            const summaryDiv = document.getElementById("summary");
+            const driverInfoDiv = document.getElementById("driverInfo");
+            const serviceImage = document.getElementById("serviceImage");
+            const visualDateDiv = document.getElementById("visualDate");
+
+            // รูปบริการ
+            serviceImage.src = getServiceImage(appointmentData.selectedService);
+            serviceImage.alt = appointmentData.selectedService || "รูปบริการ";
+
+            // วันที่แสดงในกล่องสี
+            if (appointmentData.date) {
+                const date = new Date(appointmentData.date);
+                const day = date.getDate();
+                const dayOfWeek = getDayOfWeekThai(date.getDay());
+                const dayOfWeekColor = getDayOfWeekColor(date.getDay());
+
+                visualDateDiv.style.backgroundColor = dayOfWeekColor;
+                visualDateDiv.innerHTML = `
+                    <div class="font-bold text-center drop-shadow-lg">
+                        <span class="text-8xl">${day}</span>
+                        <p class="text-4xl tracking-wider">${dayOfWeek}</p>
+                    </div>
+                `;
+            } else {
+                visualDateDiv.classList.add("bg-gray-200");
+                visualDateDiv.innerHTML = `<span class="text-2xl font-bold text-gray-500">ไม่พบข้อมูลวัน</span>`;
+            }
+
+            // สรุปข้อมูลนัด
+            summaryDiv.innerHTML = `
+                <div class="flex items-start gap-4 text-xl">
+                    <i class="fa-solid fa-hand-holding-medical text-2xl text-green-500 w-8 text-center pt-1"></i>
+                    <div>
+                        <span class="font-semibold text-gray-500">บริการที่เลือก</span>
+                        <p class="font-bold text-2xl text-green-600">${appointmentData.selectedService || "ไม่ระบุ"}</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 text-xl">
+                    <i class="fa-regular fa-hospital text-2xl text-blue-500 w-8 text-center pt-1"></i>
+                    <div>
+                        <span class="font-semibold text-gray-500">โรงพยาบาล</span>
+                        <p class="font-bold text-gray-800">${appointmentData.selectedHospital || "ไม่ระบุ"}</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 text-xl">
+                    <i class="fa-regular fa-calendar-days text-2xl text-red-500 w-8 text-center pt-1"></i>
+                    <div>
+                        <span class="font-semibold text-gray-500">วันและเวลา</span>
+                        <p class="font-bold text-gray-800">${
+                            appointmentData.date
+                                ? new Date(appointmentData.date).toLocaleDateString("th-TH", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                    })
+                                : "ไม่ได้ระบุ"
+                        } (${appointmentData.time || "-"})</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 text-xl">
+                    <i class="fa-solid fa-location-dot text-2xl text-purple-500 w-8 text-center pt-1"></i>
+                    <div>
+                        <span class="font-semibold text-gray-500">สถานที่นัดพบ</span>
+                        <p class="font-bold text-gray-800">อาคาร A, ชั้น 3</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 text-xl">
+                    <i class="fa-regular fa-id-card text-2xl text-yellow-500 w-8 text-center pt-1"></i>
+                    <div>
+                        <span class="font-semibold text-gray-500">ระบบสมาชิก</span>
+                        <p class="font-bold text-gray-800">${appointmentData.selectedMembership || "ไม่มี"}</p>
+                    </div>
+                </div>
+            `;
+
+            // ข้อมูลผู้ขับรถ (ถ้าเป็นสมาชิกพรีเมียม)
+             driverInfoDiv.innerHTML = `
+                <h3 class="text-2xl font-bold text-gray-700 mb-4">ข้อมูลผู้ขับรถ</h3>
+                <div class="flex items-start gap-4 text-xl">
+                    <i class="fa-solid fa-user-tie text-2xl text-gray-600 w-8 text-center pt-1"></i>
+                    <div>
+                        <span class="font-semibold text-gray-500">ชื่อ</span>
+                        <p class="font-bold text-gray-800">นายสมชาย ใจดี</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 text-xl">
+                    <i class="fa-solid fa-car text-2xl text-gray-600 w-8 text-center pt-1"></i>
+                    <div>
+                        <span class="font-semibold text-gray-500">ทะเบียนรถ</span>
+                        <p class="font-bold text-gray-800">กข 1234 กรุงเทพมหานคร</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 text-xl">
+                    <i class="fa-regular fa-clock text-2xl text-gray-600 w-8 text-center pt-1"></i>
+                    <div>
+                        <span class="font-semibold text-gray-500">เวลานัดรับ</span>
+                        <p class="font-bold text-gray-800">
+                            ${selectedTime === "เช้า" ? "08:00 น." : 
+                                selectedTime === "บ่าย" ? "13:00 น." : 
+                                selectedTime === "เย็น" ? "17:00 น." : "จะแจ้งภายหลัง"}
+                        </p>
+                    </div>
+                </div>
+                `;
+            }
+
+        function getServiceImage(serviceName) {
+            switch (serviceName) {
+                case "ปรึกษา":
+                    return "https://www.shutterstock.com/image-vector/patient-office-doctor-consultation-man-600nw-2462345779.jpg";
+                case "รักษา":
+                    return "https://static.vecteezy.com/system/resources/previews/010/503/813/non_2x/doctor-visiting-senior-patient-in-ward-2d-isolated-illustration-medicine-and-treatment-flat-characters-on-cartoon-background-healing-colourful-editable-scene-for-mobile-website-presentation-vector.jpg";
+                case "ตรวจสุขภาพ":
+                    return "https://thumb.ac-illust.com/1c/1c5747db4bca6b712de831802fdc12b3_t.jpeg";
+                case "กายภาพบำบัด":
+                    return "https://media.istockphoto.com/id/500734101/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%81%E0%B8%B2%E0%B8%A2%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%9A%E0%B9%8D%E0%B8%B2%E0%B8%9A%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%94%E0%B9%8D%E0%B8%B2%E0%B9%80%E0%B8%99%E0%B8%B4%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9F%E0%B8%B7%E0%B9%89%E0%B8%99%E0%B8%9F%E0%B8%B9%E0%B8%AA%E0%B8%A1%E0%B8%A3%E0%B8%A3%E0%B8%96%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%9C%E0%B8%B9%E0%B9%89%E0%B8%AA%E0%B8%B9%E0%B8%87%E0%B8%AD%E0%B8%B2%E0%B8%A2%E0%B8%B8.jpg?s=612x612&w=0&k=20&c=k_qk3A-sW23RltTY_HWjlPJFEB9knihndNH7itvnFIs=";
+                default:
+                    return "https://www.shutterstock.com/image-vector/male-doctor-smiling-happy-face-600nw-2481032615.jpg";
+            }
+        }
+
+        function getDayOfWeekThai(dayIndex) {
+            return ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"][dayIndex];
+        }
+
+        function getDayOfWeekColor(dayIndex) {
+            const colors = ["#ef4444", "#eab308", "#ec4899", "#22c55e", "#f97316", "#3b82f6", "#8b5cf6"];
+            return colors[dayIndex];
+        }
+    </script>
+</body>
+</html>

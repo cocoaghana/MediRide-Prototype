@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecting...</title>
+  <script>
+    (() => {
+      const upcoming = [];
+
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key.startsWith("ApmtElderly_Created_")) {
+          try {
+            const item = JSON.parse(sessionStorage.getItem(key));
+            if (item.date) {
+              const dateObj = new Date(item.date);
+              upcoming.push({ key, dateObj });
+            }
+          } catch (err) {
+            console.error("❌ Error parsing:", key, err);
+          }
+        }
+      }
+
+      upcoming.sort((a, b) => a.dateObj - b.dateObj);
+      const now = new Date();
+
+      const nextApmt = upcoming.find(apmt => apmt.dateObj >= now);
+
+      if (nextApmt) {
+        sessionStorage.setItem("ViewingAppointmentKey", nextApmt.key);
+        window.location.href = "ApmtDetailView.html";
+      } else {
+        alert("ไม่พบนัดหมายที่ใกล้เข้ามา");
+        window.location.href = "ApmtList.html";
+      }
+    })();
+  </script>
+</head>
+<body></body>
+</html>

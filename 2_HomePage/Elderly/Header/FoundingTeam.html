@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide Prototype - สมาชิกทีม</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            
+        }
+
+        /* Custom styles for overriding or specific needs */
+        .img-wrapper {
+            width: 150px; /* Adjust size as needed */
+            height: 150px;
+            overflow: hidden;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        .team-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Hide the scrollbar for cleaner look if content overflows, but still allow scrolling */
+        body {
+            overflow-y: scroll;
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <div class="flex-grow flex items-center justify-center p-4">
+        <div class="max-w-6xl w-full bg-white p-8 rounded-xl shadow-lg">
+            
+            <div class="relative mb-12">
+                <button id="goBackBtn" class="absolute left-0 top-0 bg-gray-400 text-white hover:bg-gray-500 px-6 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75">
+                    ย้อนกลับ
+                </button>
+                
+                <div class="text-center">
+                    <p class="text-4xl font-extrabold text-blue-600 mb-2">
+                        Founding Team
+                    </p>
+                    <p class="text-2xl text-gray-500">
+                        สมาชิกทีม MediRide
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
+                
+                <div class="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                    <div class="img-wrapper mb-4">
+                        <img class="team-img" src="cat.png" alt="Profile of Nichapha P.">
+                    </div>
+                    <p class="text-2xl font-semibold text-gray-800 mb-1">
+                        Nichapha P.
+                    </p>
+                    <p class="text-lg font-medium text-blue-500 mb-4">
+                        CEO
+                    </p>
+                </div>
+
+                <div class="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                    <div class="img-wrapper mb-4">
+                        <img class="team-img" src="modsom.png" alt="Profile of Sasanan R.">
+                    </div>
+                    <p class="text-2xl font-semibold text-gray-800 mb-1">
+                        Sasanan R.
+                    </p>
+                    <p class="text-lg font-medium text-blue-500 mb-4">
+                        CMO
+                    </p>
+                </div>
+
+                <div class="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                    <div class="img-wrapper mb-4">
+                        <img class="team-img" src="prawee.jpg" alt="Profile of Prawee R.">
+                    </div>
+                    <p class="text-2xl font-semibold text-gray-800 mb-1">
+                        Prawee R.
+                    </p>
+                    <p class="text-lg font-medium text-blue-500 mb-4">
+                        CFO
+                    </p>
+                    
+                </div>
+
+                <div class="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                    <div class="img-wrapper mb-4">
+                        <img class="team-img" src="1-1pic.jpg" alt="Profile of Phitchayapha V.">
+                    </div>
+                    <p class="text-2xl font-semibold text-gray-800 mb-1">
+                        Phitchayapha V.
+                    </p>
+                    <p class="text-lg font-medium text-blue-500 mb-4">
+                        CTO
+                    </p>
+                    
+                </div>
+
+            </div> </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const goBackBtn = document.getElementById('goBackBtn');
+
+            if (goBackBtn) {
+                goBackBtn.addEventListener('click', () => {
+                    window.history.back(); // This navigates to the previous page in history
+                });
+            }
+        });
+    </script>
+</body>
+</html>

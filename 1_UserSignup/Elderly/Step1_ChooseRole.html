@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide Prototype - เลือกประเภทผู้ใช้</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+        
+        /* Optional: Keyframe animation for a subtle pulse effect when loaded */
+        @keyframes pulse-once {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
+        }
+
+        .animate-pulse-once {
+            animation: pulse-once 1.5s ease-out 1; /* Adjust duration and iteration as needed */
+        }
+
+        /* Custom styles for larger text and buttons, and responsive adjustments */
+        @media (max-width: 640px) {
+            .role-btn {
+                width: 100%; /* Make buttons take full width on small screens */
+                padding: 1.5rem 1rem; /* Increase padding for larger touch targets */
+                font-size: 1.5rem; /* Larger font size for readability */
+            }
+            .role-btn div {
+                width: 4rem; /* Larger icon size on small screens */
+                height: 4rem;
+            }
+            .max-w-xl {
+                max-width: 100%; /* Allow content to take full width on small screens */
+                padding: 1.5rem; /* Increase overall padding */
+            }
+            .text-xl {
+                font-size: 2.25rem; /* Larger heading on small screens */
+            }
+            .px-4 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .py-2 {
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+            }
+            .text-lg {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (min-width: 641px) {
+            .role-btn {
+                padding: 2rem 4rem; /* Even larger padding for desktop */
+                font-size: 2.25rem; /* Larger font size for desktop */
+            }
+            .role-btn div {
+                width: 5rem; /* Larger icon size on larger screens */
+                height: 5rem;
+            }
+            .text-xl {
+                font-size: 2.5rem; /* Larger heading on desktop */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="window.history.back();" class="bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ย้อนกลับ
+            </button>
+            <span class="text-xl font-semibold text-gray-800"> </span>
+            </div>
+
+        <div id="step1" class="step text-center">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-10">คุณคือใคร?</h2>
+            <div class="flex flex-col gap-6"> 
+                <button onclick="goToNext('Step2_HealthInfo.html')" data-role="elderly"
+                    class="relative overflow-hidden role-btn bg-gradient-to-br from-green-400 to-green-600 text-white py-6 px-4 rounded-xl text-2xl font-bold shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out flex items-center justify-center space-x-4
+                    group animate-pulse-once">
+                    
+                    <div class="w-16 h-16 opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                        style="background-image: url('https://cdn-icons-png.flaticon.com/512/8217/8217128.png'); 
+                            background-size: contain; 
+                            background-repeat: no-repeat; 
+                            background-position: center;">
+                    </div>
+                    
+                    <span>ผู้สูงอายุ</span>
+
+                    <span class="absolute inset-0 z-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-xl scale-0 group-hover:scale-100"></span>
+                </button>
+
+                <button onclick="goToNext('../Caregiver/Step2_PersonalInfo.html')" data-role="caretaker" 
+                    class="relative overflow-hidden role-btn bg-gradient-to-br from-purple-400 to-purple-600 text-white py-6 px-4 rounded-xl text-2xl font-bold shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out flex items-center justify-center space-x-4
+                    group animate-pulse-once">
+                    
+                    <div class="w-16 h-16 opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                        style="background-image: url('https://cdn-icons-png.flaticon.com/512/2512/2512420.png'); 
+                            background-size: contain; 
+                            background-repeat: no-repeat; 
+                            background-position: center;">
+                    </div>
+                    
+                    <span>ผู้ดูแล</span>
+
+                    <span class="absolute inset-0 z-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-xl scale-0 group-hover:scale-100"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToNext(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>

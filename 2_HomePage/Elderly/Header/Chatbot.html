@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 50px auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-messages {
+            padding: 1rem;
+            height: 400px;
+            overflow-y: auto;
+            background-color: #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.375rem;
+            max-width: 80%; 
+        }
+        .user-message {
+            background-color: #bee3f8; 
+            color: #2c5282;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #d8b4fe;
+            color: #5b21b6;
+            align-self: flex-start; 
+        }
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            background-color: #f7fafc;
+        }
+        .chat-input input[type="text"] {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            margin-right: 0.5rem;
+        }
+        .chat-input button {
+            background-color: #4299e1;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="chat-container">
+        <div class="chat-header flex items-center justify-between px-4 py-3 bg-gray-100">
+            <button onclick="history.back()" class="text-blue-600 hover:text-blue-800 font-normal">
+                ← ย้อนกลับ
+            </button>
+            <span class="font-bold text-gray-700">Chatbot</span>
+            <div class="w-20"></div>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message bot-message">สวัสดี! วันนี้มีอะไรให้น้องเมย์ช่วยคะ</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="พิมพ์ข้อความของคุณ...">
+            <button onclick="sendMessage()">ส่ง</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+
+        function appendMessage(message, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message) {
+                appendMessage(message, true);
+                userInput.value = '';
+
+                setTimeout(() => {
+                    const botResponse = getBotResponse(message);
+                    appendMessage(botResponse, false);
+                }, 500);
+            }
+        }
+
+        function getBotResponse(userMessage) {
+            userMessage = userMessage.toLowerCase();
+            if (userMessage.includes('สวัสดี') || userMessage.includes('หวัดดี')) {
+                return 'สวัสดีค่ะ! ยินดีที่ได้คุยด้วยนะคะ';
+            } else if (userMessage.includes('ชื่ออะไร')) {
+                return 'ฉันชื่อน้องเมย์ ที่สร้างขึ้นเพื่อช่วยเหลือคุณค่ะ';
+            } else if (userMessage.includes('ขอบคุณ')) {
+                return 'ยินดีค่ะ!';
+            } else {
+                return 'น้องเมย์ไม่เข้าใจคำถามของคุณ โปรดลองใหม่อีกครั้ง';
+            }
+        }
+
+        userInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

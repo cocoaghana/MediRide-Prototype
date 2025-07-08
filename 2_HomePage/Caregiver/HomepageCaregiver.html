@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>หน้าแรกผู้ดูแล | MediRide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+    }
+    .font-comfortaa {
+      font-family: 'Comfortaa', cursive;
+    }
+    * {
+      transition: all 0.2s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen text-gray-800">
+
+  <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <div class="flex items-center gap-4">
+          <a href="../Caregiver/Header/ProfileCaregiver.html" class="flex items-center gap-3 p-2 rounded-full bg-blue-50 hover:bg-blue-100 border-2 border-transparent hover:border-blue-300">
+            <img id="profilePic" src="https://via.placeholder.com/48" alt="profile caregiver" class="w-12 h-12 rounded-full border-2 border-blue-400" />
+            <div id="nicknameDisplay" class="text-blue-800 font-bold text-xl pr-3">ผู้ดูแล</div>
+          </a>
+          <div class="text-2xl text-gray-300 hidden sm:block">|</div>
+          <a href="../Caregiver/Header/ProfileElderly.html" class="flex items-center gap-2 text-gray-600 hover:text-blue-600">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmjrzhTeCc6vt56fJ4H3vJPs2gAi1J-JVjcA&s" alt="profile elderly" class="w-10 h-10 rounded-full" />
+            <span class="text-lg font-medium">ผู้สูงอายุ</span>
+          </a>
+        </div>
+
+        <div class="flex items-center gap-6">
+           <a href="../Caregiver/Header/Chatbot.html" class="text-lg font-semibold text-gray-600 hover:text-blue-700">แชทผู้ช่วย</a>
+          <a href="../Caregiver/Header/FoundingTeam.html" class="text-lg font-semibold text-gray-600 hover:text-blue-700">ผู้จัดทำ</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="p-4 sm:p-6 lg:p-8">
+    <div class="max-w-4xl mx-auto mt-4">
+      
+      <div class="text-center mb-10">
+        <h1 class="text-5xl font-bold text-blue-700 font-comfortaa">MediRide</h1>
+        <div id="greeting" class="mt-4 text-4xl md:text-5xl font-light text-gray-700">
+          สวัสดี
+        </div>
+        <p class="text-2xl md:text-3xl font-normal text-gray-500 mt-2">
+          วันนี้มีอะไรให้ช่วยคะ?
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <a href="../Caregiver/BookingCaregiver/Step0_SelectElderly.html" class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-2 text-center">
+          <div class="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <img src="https://img.icons8.com/color/48/calendar--v1.png" alt="จองนัด" class="w-12 h-12">
+          </div>
+          <h2 class="text-2xl font-semibold text-gray-800">จองนัดพบแพทย์</h2>
+          <p class="text-lg text-gray-500 mt-1">เริ่มต้นการนัดหมาย</p>
+        </a>
+
+        <a href="../Caregiver/ApmtSum/ApmtList.html" class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-2 text-center">
+          <div class="w-20 h-20 mx-auto bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+            <img src="https://img.icons8.com/color/48/todo-list.png" alt="รายการนัด" class="w-12 h-12">
+          </div>
+          <h2 class="text-2xl font-semibold text-gray-800">รายการนัดทั้งหมด</h2>
+          <p class="text-lg text-gray-500 mt-1">ดูประวัติการนัดหมาย</p>
+        </a>
+
+        <a href="../Caregiver/ApmtSum/UpcomingApmt.html" class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-2 text-center">
+          <div class="w-20 h-20 mx-auto bg-pink-100 rounded-full flex items-center justify-center mb-4">
+            <img src="https://img.icons8.com/color/48/appointment-reminders.png" alt="นัดใกล้ถึง" class="w-12 h-12">
+          </div>
+          <h2 class="text-2xl font-semibold text-gray-800">นัดที่ใกล้จะถึง</h2>
+          <p class="text-lg text-gray-500 mt-1">ตรวจสอบนัดหมายล่าสุด</p>
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const nickname = sessionStorage.getItem("nickname");
+      if (nickname) {
+        const greetingEl = document.getElementById("greeting");
+        if (greetingEl) {
+          greetingEl.textContent = `สวัสดี คุณ${nickname}`;
+        }
+        
+        const nicknameDisplayEl = document.getElementById("nicknameDisplay");
+        if (nicknameDisplayEl) {
+          nicknameDisplayEl.textContent = `คุณ${nickname}`;
+        }
+      }
+
+      const profilePicSrc = sessionStorage.getItem("profilePic") || "https://audition.game.daum.net/images/common/img_default.jpg";
+      const profilePicEl = document.getElementById("profilePic");
+      if (profilePicEl) {
+        profilePicEl.src = profilePicSrc;
+      }
+    });
+  </script>
+
+</body>
+</html>

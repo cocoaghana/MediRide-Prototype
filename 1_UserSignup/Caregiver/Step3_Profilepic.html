@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide Prototype - ถ่ายรูปโปรไฟล์ (ผู้ดูแล)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        /* Apply Prompt font to the entire body for Thai text, with sans-serif as fallback */
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* Custom file input styling */
+        .custom-file-input {
+            display: inline-block;
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            background-color: #3B82F6; /* blue-500 */
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.2s ease-in-out;
+            border: none;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        .custom-file-input:hover {
+            background-color: #2563eb; /* blue-600 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .custom-file-input:active {
+            transform: translateY(1px);
+        }
+
+        /* Hide default file input */
+        .hidden-file-input {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="window.history.back();" class="bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ย้อนกลับ
+            </button>
+            <span class="text-lg font-semibold text-gray-800">หน้า 2 จาก 4</span>
+            </div>
+
+        <div id="step4" class="step">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">รูปโปรไฟล์</h2>
+            
+            <div class="flex flex-col items-center justify-center mb-8">
+                <img id="preview" src="https://endlessicons.com/wp-content/uploads/2012/11/camera-icon.png" 
+                     class="w-40 h-40 rounded-full object-cover border-4 border-blue-200 shadow-md mb-4" 
+                     alt="Profile Preview" />
+                
+                <label for="profilePic" class="custom-file-input mt-2">
+                    <span class="mr-2">📸</span> เลือกรูปโปรไฟล์
+                </label>
+                <input type="file" id="profilePic" accept="image/*" class="hidden-file-input" />
+            </div>
+
+            <div class="mt-4 text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <p class="text-base text-gray-700 mb-2">ชื่อผู้ใช้ (Username) ของคุณ:</p>
+                <p id="autoUsername" class="font-bold text-blue-700 text-2xl break-all">@username_placeholder</p>
+            </div>
+            
+            <button id="confirmBtn" class="bg-green-600 text-white font-bold py-3 px-8 mt-8 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 transition duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95 w-full disabled:opacity-50 disabled:cursor-not-allowed">
+                ยืนยันข้อมูลและสร้างโปรไฟล์
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const profilePicInput = document.getElementById('profilePic');
+        const previewImage = document.getElementById('preview');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const autoUsernameEl = document.getElementById("autoUsername");
+
+        // Load username from sessionStorage and display it
+        const username = sessionStorage.getItem('username');
+        if (username) {
+            autoUsernameEl.textContent = "@" + username;
+        } else {
+            autoUsernameEl.textContent = "@ไม่พบข้อมูลผู้ใช้"; // Clearer message
+            // Disable confirm button if no username is found (or handle as per your flow)
+            confirmBtn.disabled = true; 
+        }
+
+        // Check for existing profile picture in sessionStorage on load
+        const savedProfilePic = sessionStorage.getItem("profilePic");
+        if (savedProfilePic) {
+            previewImage.src = savedProfilePic;
+            confirmBtn.disabled = false; // Enable button if a picture is already saved
+        } else {
+            // Use a placeholder if no picture is saved, and disable the button
+            previewImage.src = "https://endlessicons.com/wp-content/uploads/2012/11/camera-icon.png";
+            confirmBtn.disabled = true; 
+        }
+
+        // Event listener for when a file is selected
+        profilePicInput.addEventListener("change", function () {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    sessionStorage.setItem("profilePic", e.target.result); // Save Base64 string to sessionStorage
+                    confirmBtn.disabled = false; // Enable confirm button once a picture is selected
+                };
+                reader.readAsDataURL(this.files[0]);
+            } else {
+                // If no file is selected (e.g., user cancels the file dialog)
+                previewImage.src = "https://endlessicons.com/wp-content/uploads/2012/11/camera-icon.png";
+                sessionStorage.removeItem("profilePic"); // Remove from sessionStorage if cleared
+                confirmBtn.disabled = true; // Disable confirm button
+            }
+        });
+
+        // Event listener for the "Confirm" button
+        confirmBtn.addEventListener("click", () => {
+            if (!confirmBtn.disabled) {
+                // You can add additional logic here before navigating
+                window.location.href = 'Step4_ProfileSum.html'; // Navigate to the caretaker's profile summary
+            }
+        });
+    </script>
+</body>
+</html>

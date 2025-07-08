@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>เลือกวันและเวลา</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-image: linear-gradient(to bottom right, #e2e8f0, #cbd5e1); /* Soft gradient background */
+        }
+        /* Custom styles for Flatpickr to blend with Tailwind */
+        .flatpickr-calendar {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Tailwind shadow-md */
+            border-radius: 0.75rem; /* Tailwind rounded-xl */
+            border: none; /* Explicitly remove border */
+        }
+        .flatpickr-day.selected, .flatpickr-day.selected:hover, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.inRange, .flatpickr-day.inRange:hover {
+            background: #2563eb; /* Blue-600 */
+            border-color: #2563eb; /* Blue-600 */
+            color: #fff;
+        }
+        .flatpickr-day.today {
+            border-color: #3b82f6; /* Blue-500 */
+        }
+        .flatpickr-day.today:hover {
+            background: #3b82f6; /* Blue-500 */
+        }
+        .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-month {
+            font-weight: 600; /* Prompt Semibold */
+        }
+        .flatpickr-weekday {
+            font-weight: 500; /* Prompt Medium */
+            color: #4b5563; /* Gray-700 */
+        }
+        .flatpickr-current-month .flatpickr-numInputWrapper span.arrowUp:after,
+        .flatpickr-current-month .flatpickr-numInputWrapper span.arrowDown:after {
+            color: #6b7280; /* Gray-500 */
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+    <div class="container mx-auto max-w-4xl bg-white rounded-2xl shadow-xl p-8 md:p-10">
+        <div class="mb-8">
+            <button onclick="history.back()" class="flex items-center text-blue-600 hover:text-blue-800 font-semibold text-lg transition duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                ย้อนกลับ
+            </button>
+        </div>
+
+        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-10 leading-tight">เลือกวันและเวลาที่สะดวก</h1>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="md:w-1/2 flex flex-col">
+                <label for="datePicker" class="block text-gray-700 text-lg font-bold mb-3">เลือกวันที่:</label>
+                <div id="datePicker" class="bg-white p-3 rounded-xl flex-grow"></div>
+                <input type="hidden" id="date" />
+                <p id="selectedDateText" class="text-blue-600 font-semibold text-2xl mt-8 text-center">ยังไม่มีวันที่ถูกเลือก</p>
+            </div>
+
+            <div class="md:w-1/2 flex flex-col items-center justify-center bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <label class="block text-gray-700 text-lg font-bold mb-4">เลือกช่วงเวลา:</label>
+                <img id="timeImage" src="https://www.shutterstock.com/image-vector/black-clock-icon-flat-style-600nw-2473539533.jpg" alt="นาฬิกา" class="w-40 h-40 object-contain mb-6 transition-all duration-300 ease-in-out" />
+                <div class="flex flex-col space-y-3">
+                    <label class="flex items-center text-gray-700 font-medium cursor-pointer text-lg">
+                        <input type="radio" name="time" value="เช้า" onchange="updateTimeImage('เช้า')" class="mr-3 w-5 h-5 text-blue-600 focus:ring-blue-500" />
+                        <span>เช้า (08:00 - 12:00 น.)</span>
+                    </label>
+                    <label class="flex items-center text-gray-700 font-medium cursor-pointer text-lg">
+                        <input type="radio" name="time" value="บ่าย" onchange="updateTimeImage('บ่าย')" class="mr-3 w-5 h-5 text-blue-600 focus:ring-blue-500" />
+                        <span>บ่าย (13:00 - 17:00 น.)</span>
+                    </label>
+                    <label class="flex items-center text-gray-700 font-medium cursor-pointer text-lg">
+                        <input type="radio" name="time" value="เย็น" onchange="updateTimeImage('เย็น')" class="mr-3 w-5 h-5 text-blue-600 focus:ring-blue-500" />
+                        <span>เย็น (17:00 - 20:00 น.)</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="nextStep()" class="mt-10 w-full bg-green-600 text-white py-4 rounded-xl font-bold text-xl hover:bg-green-700 shadow-lg transition duration-200">
+            ต่อไป
+        </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
+    <script>
+        // Flatpickr initialization
+        flatpickr("#datePicker", {
+        dateFormat: "Y-m-d", // ใช้สำหรับเก็บข้อมูลใน hidden field
+        minDate: "today",
+        locale: "th",
+        inline: true,
+        showMonths: 1,
+        disableMobile: true,
+        monthSelectorType: "static",
+        onChange: function(selectedDates, dateStr) {
+            const selectedDate = selectedDates[0];
+
+            if (selectedDate) {
+                const day = selectedDate.getDate();
+                const month = selectedDate.toLocaleDateString('th-TH', { month: 'long' });
+                const year = selectedDate.getFullYear() + 543;
+
+                const formatted = `${day} ${month} ${year}`;
+                document.getElementById("date").value = dateStr; // คงรูปแบบเดิมไว้สำหรับเก็บ
+                document.getElementById("selectedDateText").innerText = `วันที่ที่เลือก: ${formatted}`;
+            }
+        }
+    });
+        // Function to update the time-based image
+        function updateTimeImage(time) {
+            const timeImage = document.getElementById("timeImage");
+            if (time === "เช้า") {
+                timeImage.src = "https://t4.ftcdn.net/jpg/01/25/86/35/360_F_125863509_jaISqQt7MofhOT3UxRTHZoEbMmmFYIr8.jpg";
+                timeImage.alt = "ดวงอาทิตย์";
+            } else if (time === "บ่าย") {
+                timeImage.src = "https://static.vecteezy.com/system/resources/previews/012/034/267/non_2x/cartoon-sun-under-cloud-for-kids-weather-icon-web-icon-vector.jpg";
+                timeImage.alt = "ดวงอาทิตย์ช่วงบ่าย";
+            } else if (time === "เย็น") {
+                timeImage.src = "https://img.freepik.com/free-psd/weather-icon-isolated_23-2151178585.jpg";
+                timeImage.alt = "ดวงจันทร์";
+            } else {
+                // Default image if no specific time is selected (or on initial load)
+                // Updated to a more modern clock icon
+                timeImage.src = "https://www.shutterstock.com/image-vector/black-clock-icon-flat-style-600nw-2473539533.jpg";
+                timeImage.alt = "นาฬิกา";
+            }
+        }
+
+        // Function to handle moving to the next step
+        function nextStep() {
+            const date = document.getElementById("date").value;
+            const time = document.querySelector('input[name="time"]:checked'); // Gets the selected radio button
+
+            if (date && time) {
+                sessionStorage.setItem("selectedDate", date); // Changed key to 'selectedDate' for clarity
+                sessionStorage.setItem("selectedTime", time.value); // Changed key to 'selectedTime' for clarity
+                window.location.href = "Step5_ConfirmBooking.html";
+            } else {
+                alert("กรุณาเลือกวันและช่วงเวลาที่ต้องการนัดหมาย");
+            }
+        }
+
+        // Initialize the time image on page load (shows clock by default)
+        updateTimeImage(null);
+
+        // Check if date or time were previously selected in session storage and pre-fill/update
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedDate = sessionStorage.getItem("selectedDate");
+            const storedTime = sessionStorage.getItem("selectedTime");
+
+            if (storedDate) {
+                const fp = document.querySelector("#datePicker")._flatpickr;
+                fp.setDate(storedDate, true); // Set date and trigger onChange
+            }
+
+            if (storedTime) {
+                const timeRadio = document.querySelector(`input[name="time"][value="${storedTime}"]`);
+                if (timeRadio) {
+                    timeRadio.checked = true;
+                    updateTimeImage(storedTime);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

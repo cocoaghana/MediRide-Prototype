@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediRide Prototype - จับคู่กับผู้สูงอายุ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex justify-between items-center mb-8">
+            <button onclick="window.history.back();" class="bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg text-lg font-medium transition duration-200 ease-in-out">
+                ย้อนกลับ
+            </button>
+            <span class="text-lg font-semibold text-gray-800">หน้า 4 จาก 4</span>
+            <span></span>
+        </div>
+
+        <div id="step6" class="step">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">จับคู่กับผู้สูงอายุ</h2>
+
+            <div class="mb-6">
+                <label for="elderlyUsername" class="block text-gray-700 text-sm font-medium mb-2">ระบุ Username ของผู้สูงอายุ</label>
+                <input type="text" id="elderlyUsername" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out" placeholder="@ชื่อเล่นเบอร์โทร (เช่น @somchai0812345678)" />
+            </div>
+
+            <button id="confirmPairingBtn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 transition duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95 w-full">
+                ยืนยันการจับคู่
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const elderlyUsernameInput = document.getElementById("elderlyUsername");
+        const confirmPairingBtn = document.getElementById("confirmPairingBtn");
+
+        function validateInput() {
+            confirmPairingBtn.disabled = elderlyUsernameInput.value.trim() === '';
+        }
+
+        elderlyUsernameInput.addEventListener('input', validateInput);
+        document.addEventListener('DOMContentLoaded', validateInput);
+
+        confirmPairingBtn.addEventListener("click", () => {
+            if (confirmPairingBtn.disabled) return;
+
+            const enteredUsername = elderlyUsernameInput.value.trim();
+            const fixedUsername = "@testelderly0812345678"; // จำลองสำหรับ demo
+
+            sessionStorage.setItem('pairedElderlyUsername', fixedUsername);
+
+            // เปลี่ยนหน้าไปยัง homepage caregiver
+            window.location.href = '/2_HomePage/Caregiver/HomepageCaregiver.html';
+            // หมายเหตุ: ปรับ path ตามโครงสร้างจริงของโปรเจกต์คุณ
+        });
+    </script>
+</body>
+</html>

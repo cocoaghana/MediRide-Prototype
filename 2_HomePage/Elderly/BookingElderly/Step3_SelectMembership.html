@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>เลือกระบบสมาชิก</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-image: linear-gradient(to bottom right, #e2e8f0, #cbd5e1); /* Soft gradient background */
+        }
+        /* Custom border for selected membership option */
+        .membership-option.selected {
+            border: 3px solid #2563eb; /* Blue-600 border for selected */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Enhance shadow on select */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+
+    <div class="container mx-auto max-w-xl bg-white rounded-2xl shadow-xl p-8 md:p-10">
+
+        <div class="mb-8">
+            <button onclick="history.back()" class="flex items-center text-gray-600 hover:text-gray-800 font-semibold text-lg transition duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                ย้อนกลับ
+            </button>
+        </div>
+
+        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-10 leading-tight">เลือกระบบสมาชิก</h1>
+
+        <div class="flex flex-col md:flex-row gap-6 justify-center w-full">
+            <div onclick="selectMembership('ทั่วไป', this)" class="membership-option flex-1 bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-lg cursor-pointer transition-all duration-300 ease-in-out border-2 border-transparent">
+                <img src="https://cdn-icons-png.flaticon.com/512/55/55283.png" alt="ไอคอนทั่วไป" class="w-20 h-20 mx-auto mb-4" />
+                <h2 class="text-2xl font-bold text-gray-800 mb-3 text-center">ทั่วไป</h2>
+                <hr class="border-gray-300 mb-3">
+                <ul class="list-none space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-green-500 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>ไม่มีค่าธรรมเนียม</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-red-500 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        <span>เชื่อมผู้ดูแลได้แค่1คน</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div onclick="selectMembership('พรีเมียม', this)" class="membership-option flex-1 bg-yellow-100 rounded-xl p-6 shadow-md hover:shadow-lg cursor-pointer transition-all duration-300 ease-in-out border-2 border-transparent">
+                <img src="https://png.pngtree.com/png-vector/20220926/ourmid/pngtree-premium-car-logo-png-image_6217277.png" alt="ไอคอนพรีเมียม" class="w-20 h-20 mx-auto mb-4" />
+                <h2 class="text-2xl font-bold text-yellow-700 mb-3 text-center">พรีเมียม</h2>
+                <hr class="border-yellow-400 mb-3">
+                <ul class="list-none space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-green-500 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>แพกเกจเหมาจ่ายถูกลง</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-green-500 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>บริการด่วนพิเศษ</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-green-500 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>เชื่อมผู้ดูแลได้มากกว่า1คน</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <button onclick="nextStep()" class="mt-10 w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-xl hover:bg-blue-700 shadow-lg transition duration-200">
+            ดำเนินการต่อ
+        </button>
+    </div>
+
+    <script>
+        let selectedMembershipElement = null; // Stores the currently selected HTML element
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedMembership = sessionStorage.getItem("selectedMembership");
+            if (storedMembership) {
+                // Find the element corresponding to the stored membership and apply selection styles
+                const elements = document.querySelectorAll('.membership-option');
+                elements.forEach(element => {
+                    const h2Text = element.querySelector('h2').innerText.trim();
+                    if (h2Text === storedMembership) {
+                        selectMembership(storedMembership, element); // Re-apply the selection
+                    }
+                });
+            }
+        });
+
+        function selectMembership(type, element) {
+            // Remove 'selected' class from previously selected element, if any
+            if (selectedMembershipElement) {
+                selectedMembershipElement.classList.remove("selected");
+                selectedMembershipElement.classList.remove("scale-105"); // Remove scale transform
+            }
+
+            // Add 'selected' class and scale transform to the newly selected element
+            element.classList.add("selected");
+            element.classList.add("scale-105"); // Apply scale transform
+            selectedMembershipElement = element; // Update the reference to the new selected element
+
+            // Store the selected membership type in sessionStorage
+            sessionStorage.setItem("selectedMembership", type);
+        }
+
+        function nextStep() {
+            if (sessionStorage.getItem("selectedMembership")) {
+                window.location.href = "Step4_SelectDate.html";
+            } else {
+                alert("กรุณาเลือกระบบสมาชิกที่คุณต้องการ");
+            }
+        }
+    </script>
+</body>
+</html>
